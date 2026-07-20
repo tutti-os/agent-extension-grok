@@ -1,0 +1,17 @@
+{
+  "name": "@tutti-os/agent-extension-grok-source",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.11.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "package:tutti-agent": "node ./scripts/package.mjs",
+    "check": "node ./scripts/check.mjs && node --test ./scripts/*.test.mjs"
+  },
+  "dependencies": {
+    "semver": "7.8.0"
+  }
+}

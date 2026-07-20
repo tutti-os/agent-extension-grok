@@ -1,0 +1,14 @@
+{
+  "agent.name": "Grok Build",
+  "agent.description": "通过 ACP 使用 xAI Grok Build CLI",
+  "runtime.install.title": "为 Tutti 安装 Grok Build",
+  "runtime.install.description": "将固定版本的官方 Grok Build 可执行文件安装到 Tutti 私有运行时目录，不修改已有的 grok 命令",
+  "runtime.authRequired": "请登录 Grok Build，或配置受支持的 xAI 凭据",
+  "tools.shell.title": "已运行命令",
+  "tools.read.title": "已读取文件",
+  "tools.write.title": "已写入文件",
+  "tools.edit.title": "已编辑文件",
+  "tools.search.title": "已搜索文件",
+  "tools.webSearch.title": "已搜索网页",
+  "tools.webFetch.title": "已获取网页内容"
+}

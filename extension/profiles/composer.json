@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "tutti.agent.composer.v1",
+  "model": {
+    "source": "acp-session-models"
+  },
+  "permission": {
+    "source": "spawn-argv"
+  },
+  "permissionModes": [
+    {
+      "runtimeId": "default",
+      "semantic": "ask-before-write"
+    },
+    {
+      "runtimeId": "auto",
+      "semantic": "auto"
+    },
+    {
+      "runtimeId": "bypassPermissions",
+      "semantic": "full-access"
+    }
+  ],
+  "launchSettings": {
+    "permission": {
+      "placeholder": "${permissionMode}",
+      "defaultSemantic": "ask-before-write"
+    }
+  },
+  "workflowModes": {
+    "plan": {
+      "enabledRuntimeId": "plan",
+      "disabledRuntimeId": "default"
+    }
+  },
+  "setModel": {
+    "reasoningEffortMeta": true
+  },
+  "slashCommands": {
+    "commandCatalogAuthoritative": true,
+    "commands": [
+      {
+        "name": "compact",
+        "effect": "submitImmediate"
+      },
+      {
+        "name": "status",
+        "effect": "showStatus"
+      },
+      {
+        "name": "plan",
+        "effect": "togglePlanMode"
+      }
+    ]
+  },
+  "skills": {
+    "invocation": "textTrigger",
+    "triggerPrefix": "/",
+    "roots": [
+      {
+        "scope": "workspace",
+        "path": ".grok/skills"
+      },
+      {
+        "scope": "workspace",
+        "path": ".agents/skills"
+      },
+      {
+        "scope": "user",
+        "path": ".grok/skills"
+      },
+      {
+        "scope": "user",
+        "path": ".agents/skills"
+      }
+    ]
+  }
+}

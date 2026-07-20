@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "tutti.agent.tools.v1",
+  "tools": [
+    {
+      "match": {
+        "ids": ["Shell", "shell", "Bash", "bash"]
+      },
+      "canonicalId": "Bash",
+      "category": "command",
+      "presentation": {
+        "renderer": "terminal",
+        "titleKey": "tools.shell.title"
+      },
+      "command": {
+        "source": "input",
+        "path": "$.command"
+      }
+    },
+    {
+      "match": {
+        "ids": ["Read", "read", "ReadFile", "read_file"]
+      },
+      "canonicalId": "Read",
+      "category": "read",
+      "presentation": {
+        "renderer": "code",
+        "titleKey": "tools.read.title"
+      }
+    },
+    {
+      "match": {
+        "ids": ["Write", "write", "WriteFile", "write_file"]
+      },
+      "canonicalId": "Write",
+      "category": "file-change",
+      "presentation": {
+        "renderer": "diff",
+        "titleKey": "tools.write.title"
+      },
+      "fileEffect": {
+        "source": "acp-content-diff"
+      }
+    },
+    {
+      "match": {
+        "ids": ["Edit", "edit", "Replace", "replace"]
+      },
+      "canonicalId": "Edit",
+      "category": "file-change",
+      "presentation": {
+        "renderer": "diff",
+        "titleKey": "tools.edit.title"
+      },
+      "fileEffect": {
+        "source": "acp-content-diff"
+      }
+    },
+    {
+      "match": {
+        "ids": ["Glob", "glob", "Grep", "grep", "Search", "search"]
+      },
+      "canonicalId": "Search",
+      "category": "search",
+      "presentation": {
+        "renderer": "file-list",
+        "titleKey": "tools.search.title"
+      }
+    },
+    {
+      "match": {
+        "ids": ["WebSearch", "web_search"]
+      },
+      "canonicalId": "WebSearch",
+      "category": "web",
+      "presentation": {
+        "renderer": "web-search",
+        "titleKey": "tools.webSearch.title"
+      }
+    },
+    {
+      "match": {
+        "ids": ["WebFetch", "web_fetch"]
+      },
+      "canonicalId": "WebFetch",
+      "category": "web",
+      "presentation": {
+        "renderer": "web-fetch",
+        "titleKey": "tools.webFetch.title"
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "tutti.agent.discovery.v1",
+  "candidates": [
+    {
+      "binaryNames": ["grok"],
+      "version": {
+        "args": ["--version"],
+        "constraint": ">=0.2.89 <0.3.0"
+      },
+      "launchArgs": [
+        "--no-auto-update",
+        "--permission-mode",
+        "${permissionMode}",
+        "agent",
+        "stdio"
+      ],
+      "probe": {
+        "kind": "acp-initialize",
+        "timeoutMs": 15000
+      }
+    }
+  ]
+}
