@@ -24,7 +24,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     concurrency:
-      group: tutti-agent-extension-${{ vars.TUTTI_APP_RELEASES_S3_BUCKET }}-grok
+      group: tutti-agent-extension-${{ vars.TUTTI_AGENT_RELEASES_S3_BUCKET }}-grok
       cancel-in-progress: false
 
     steps:
@@ -38,8 +38,8 @@ jobs:
           cache: pnpm
       - uses: aws-actions/configure-aws-credentials@v5
         with:
-          role-to-assume: ${{ vars.TUTTI_APP_RELEASES_AWS_ROLE_ARN }}
-          aws-region: ${{ vars.TUTTI_APP_RELEASES_AWS_REGION }}
+          role-to-assume: ${{ vars.TUTTI_AGENT_RELEASES_AWS_ROLE_ARN }}
+          aws-region: ${{ vars.TUTTI_AGENT_RELEASES_AWS_REGION }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - name: Build extension package
@@ -59,7 +59,7 @@ jobs:
           --git-sha "${GITHUB_SHA}"
       - name: Publish immutable release
         env:
-          BUCKET: ${{ vars.TUTTI_APP_RELEASES_S3_BUCKET }}
+          BUCKET: ${{ vars.TUTTI_AGENT_RELEASES_S3_BUCKET }}
           VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
@@ -85,7 +85,7 @@ jobs:
           done
       - name: Update versions metadata
         env:
-          BUCKET: ${{ vars.TUTTI_APP_RELEASES_S3_BUCKET }}
+          BUCKET: ${{ vars.TUTTI_AGENT_RELEASES_S3_BUCKET }}
           VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
