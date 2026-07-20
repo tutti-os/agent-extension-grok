@@ -13,7 +13,10 @@ command.
 
 Grok is launched with self-update disabled and with the permission tier chosen
 when the conversation is created. Permission cannot change inside that
-conversation. Plan mode remains an independent ACP workflow mode.
+conversation. Because Grok Build 0.2.103 implements Plan through the launch-time
+`--permission-mode plan` value rather than an advertised live ACP mode, Tutti
+restarts the ACP process and loads the same provider session when Plan is toggled;
+leaving Plan restores the conversation's original permission tier.
 
 ## Build
 

@@ -29,7 +29,8 @@
   "workflowModes": {
     "plan": {
       "enabledRuntimeId": "plan",
-      "disabledRuntimeId": "default"
+      "disabledRuntimeId": "default",
+      "updateStrategy": "restart-with-launch-permission"
     }
   },
   "setModel": {

@@ -123,7 +123,8 @@ async function validateGrokProfiles(packageDir, manifest) {
     throw new Error("Grok spawn permission mappings are invalid");
   }
   if (composer.workflowModes?.plan?.enabledRuntimeId !== "plan" ||
-      composer.workflowModes?.plan?.disabledRuntimeId !== "default") {
+      composer.workflowModes?.plan?.disabledRuntimeId !== "default" ||
+      composer.workflowModes?.plan?.updateStrategy !== "restart-with-launch-permission") {
     throw new Error("Grok Plan workflow mapping is invalid");
   }
   if (composer.setModel?.reasoningEffortMeta !== true) {
