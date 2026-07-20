@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "tutti.agent.manifest.v2",
+  "agentKey": "grok",
+  "version": "0.1.0",
+  "name": "Grok Build",
+  "description": "xAI Grok Build CLI through the Agent Client Protocol",
+  "icon": {
+    "type": "asset",
+    "src": "assets/icon.svg"
+  },
+  "runtime": {
+    "kind": "standard-acp",
+    "install": {
+      "runner": "binary",
+      "artifacts": [
+        {
+          "kind": "executable",
+          "platform": "darwin-arm64",
+          "version": "0.2.103",
+          "url": "https://x.ai/cli/grok-0.2.103-macos-aarch64",
+          "sha256": "1be9de92f31566f2d38992125f902220b022f4f1e3fb7330532a0513d1d6f0f2",
+          "sizeBytes": 121600480,
+          "provenance": {
+            "kind": "official-release",
+            "url": "https://x.ai/cli/install.sh"
+          }
+        }
+      ]
+    },
+    "launch": {
+      "executable": "${installRoot}/grok",
+      "args": [
+        "--no-auto-update",
+        "--permission-mode",
+        "${permissionMode}",
+        "agent",
+        "stdio"
+      ],
+      "publishUserCommand": false
+    }
+  },
+  "profiles": {
+    "discovery": "profiles/discovery.json",
+    "tools": "profiles/tools.json",
+    "capabilities": "profiles/capabilities.json",
+    "composer": "profiles/composer.json"
+  },
+  "localizationInfo": {
+    "defaultLocale": "en",
+    "defaultFile": "locales/en.json",
+    "additionalLocales": [
+      {
+        "locale": "zh-CN",
+        "file": "locales/zh-CN.json"
+      }
+    ]
+  }
+}

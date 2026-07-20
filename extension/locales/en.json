@@ -1,0 +1,14 @@
+{
+  "agent.name": "Grok Build",
+  "agent.description": "xAI Grok Build CLI through ACP",
+  "runtime.install.title": "Install Grok Build for Tutti",
+  "runtime.install.description": "Installs the pinned official Grok Build executable in Tutti's private managed-runtime directory without changing your existing grok command.",
+  "runtime.authRequired": "Sign in with Grok Build or configure a supported xAI credential.",
+  "tools.shell.title": "Ran command",
+  "tools.read.title": "Read file",
+  "tools.write.title": "Wrote file",
+  "tools.edit.title": "Edited file",
+  "tools.search.title": "Searched files",
+  "tools.webSearch.title": "Searched the web",
+  "tools.webFetch.title": "Fetched web content"
+}

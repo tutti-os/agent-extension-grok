@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "tutti.agent.capabilities.v1",
+  "declared": {
+    "imageInput": true,
+    "skills": true,
+    "compact": true,
+    "tokenUsage": true,
+    "planMode": true,
+    "interrupt": true
+  }
+}
