@@ -78,10 +78,28 @@ export async function buildVersions(options) {
     throw new Error(`version ${record.version} already exists with different content`);
   }
   byVersion.set(record.version, record);
+  for (const version of normalizeWithdrawVersions(options.withdrawVersions)) {
+    if (version === record.version) {
+      throw new Error(`cannot withdraw the version being published: ${version}`);
+    }
+    const entry = byVersion.get(version);
+    if (!entry) {
+      throw new Error(`cannot withdraw unknown version: ${version}`);
+    }
+    byVersion.set(version, { ...entry, status: "withdrawn" });
+  }
   const versions = [...byVersion.values()].sort((left, right) => semver.rcompare(left.version, right.version));
   const result = { schemaVersion: "tutti.agent.versions.v1", agentKey: "grok", versions };
   await writeJSON(path.resolve(options.output), result);
   return result;
+}
+
+function normalizeWithdrawVersions(value) {
+  const versions = String(value ?? "")
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  return [...new Set(versions)].map((version) => requireSemver(version, "withdrawn version"));
 }
 
 export async function verifyBuiltRelease({ release, artifactPath, publicKey, signingKeyId }) {
