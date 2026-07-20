@@ -43,4 +43,42 @@ describe("Grok extension release", () => {
     assert.equal(versions.versions[0].release.manifest.schemaVersion, "tutti.agent.manifest.v2");
     assert.equal(versions.versions[0].release.manifest.runtime.install.artifacts[0].version, "0.2.103");
   });
+
+  it("withdraws an existing release while publishing a replacement", async () => {
+    execFileSync(process.execPath, [path.join(root, "scripts", "package.mjs")]);
+    const outputDir = await mkdtemp(path.join(os.tmpdir(), "grok-extension-release-test-"));
+    const { privateKey } = generateKeyPairSync("ed25519");
+    const baseOptions = {
+      packageDir: path.join(root, "build", "tutti-agent", "package"),
+      outputDir,
+      baseUrl: "https://example.test/tutti-agent-releases",
+      signingKeyId: "tutti-grok-release-v2",
+      privateKey: privateKey.export({ type: "pkcs8", format: "pem" }),
+      publishedAt: "2026-07-20T00:00:00Z",
+      gitSha: "test"
+    };
+    const original = await buildRelease({ ...baseOptions, version: "0.1.0" });
+    const versionsPath = path.join(outputDir, "agents", "grok", "versions.json");
+    await buildVersions({
+      releaseFile: original.releasePath,
+      output: versionsPath,
+      minTuttiVersion: "0.0.0"
+    });
+    const replacement = await buildRelease({ ...baseOptions, version: "0.1.1" });
+    const versions = await buildVersions({
+      releaseFile: replacement.releasePath,
+      existingVersions: versionsPath,
+      output: versionsPath,
+      minTuttiVersion: "0.0.0",
+      withdrawVersions: "0.1.0"
+    });
+
+    assert.deepEqual(
+      versions.versions.map(({ version, status }) => ({ version, status })),
+      [
+        { version: "0.1.1", status: "active" },
+        { version: "0.1.0", status: "withdrawn" }
+      ]
+    );
+  });
 });

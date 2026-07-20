@@ -7,6 +7,10 @@ on:
         description: Immutable extension version
         required: true
         default: "0.1.0"
+      withdraw_versions:
+        description: Comma-separated extension versions to withdraw
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -16,7 +20,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   AGENT_KEY: grok
   MIN_TUTTI_VERSION: "0.0.0"
-  SIGNING_KEY_ID: tutti-grok-release-v1
+  SIGNING_KEY_ID: tutti-grok-release-v2
   S3_PREFIX: tutti-agent-releases
   RELEASE_ASSETS_BASE_URL: https://d1x7gb6wqsqmnm.cloudfront.net/tutti-agent-releases
 
@@ -61,6 +65,7 @@ jobs:
         env:
           BUCKET: ${{ vars.TUTTI_AGENT_RELEASES_S3_BUCKET }}
           VERSION: ${{ inputs.version }}
+          WITHDRAW_VERSIONS: ${{ inputs.withdraw_versions }}
         run: |
           set -euo pipefail
           local_dir="dist/tutti-agent-extension-release/agents/${AGENT_KEY}/${VERSION}"
@@ -100,6 +105,7 @@ jobs:
             fi
             args=(versions --release-file "${root}/${VERSION}/release.json" --output "${root}/versions.json" --min-tutti-version "${MIN_TUTTI_VERSION}")
             if [[ -n "${etag}" ]]; then args+=(--existing-versions /tmp/existing-versions.json); fi
+            if [[ -n "${WITHDRAW_VERSIONS}" ]]; then args+=(--withdraw-versions "${WITHDRAW_VERSIONS}"); fi
             node scripts/release.mjs "${args[@]}"
             put_args=(--bucket "${BUCKET}" --key "${versions_key}" --body "${root}/versions.json" --content-type application/json --cache-control no-cache)
             if [[ -n "${etag}" ]]; then put_args+=(--if-match "${etag}"); else put_args+=(--if-none-match '*'); fi
