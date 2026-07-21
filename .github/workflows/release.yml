@@ -92,6 +92,7 @@ jobs:
         env:
           BUCKET: ${{ vars.TUTTI_AGENT_RELEASES_S3_BUCKET }}
           VERSION: ${{ inputs.version }}
+          WITHDRAW_VERSIONS: ${{ inputs.withdraw_versions }}
         run: |
           set -euo pipefail
           root="dist/tutti-agent-extension-release/agents/${AGENT_KEY}"
@@ -105,7 +106,7 @@ jobs:
             fi
             args=(versions --release-file "${root}/${VERSION}/release.json" --output "${root}/versions.json" --min-tutti-version "${MIN_TUTTI_VERSION}")
             if [[ -n "${etag}" ]]; then args+=(--existing-versions /tmp/existing-versions.json); fi
-            if [[ -n "${WITHDRAW_VERSIONS}" ]]; then args+=(--withdraw-versions "${WITHDRAW_VERSIONS}"); fi
+            if [[ -n "${WITHDRAW_VERSIONS:-}" ]]; then args+=(--withdraw-versions "${WITHDRAW_VERSIONS}"); fi
             node scripts/release.mjs "${args[@]}"
             put_args=(--bucket "${BUCKET}" --key "${versions_key}" --body "${root}/versions.json" --content-type application/json --cache-control no-cache)
             if [[ -n "${etag}" ]]; then put_args+=(--if-match "${etag}"); else put_args+=(--if-none-match '*'); fi
